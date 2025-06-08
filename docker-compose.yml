@@ -32,7 +32,9 @@ services:
     restart: unless-stopped
 
   apache_php:
-    image: php:8.3-apache
+    build:
+      context: ./docker # Este é o diretório onde seu Dockerfile está
+      dockerfile: Dockerfile
     container_name: php_server
     ports:
       - "80:80"
