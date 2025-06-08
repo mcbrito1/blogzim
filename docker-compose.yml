@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.6.36
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root # Altere para uma senha forte
+      MYSQL_DATABASE: blogzim            # Opcional: nome do seu banco de dados
+      MYSQL_USER: blogzim                   # Opcional: nome de usuário para o banco de dados
+      MYSQL_PASSWORD: blogzim123           # Opcional: senha para o usuário do banco de dados
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_interface
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root 
+    ports:
+      - "8080:80"
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  apache_php:
+    image: php:8.3-apache
+    container_name: php_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./blogzim:/var/www/html 
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./mysql-data
+
+networks:
+  app_network:
+    driver: bridge
