@@ -3,6 +3,7 @@
     <i class="bi bi-list"></i>
     </button>
     <ul class="dropdown-menu">
-    <li><a class="dropdown-item"><i class="bi bi-pencil"></i> Editar</a></li>
-    <li><a class="dropdown-item"><i class="bi bi-trash"></i> Excluir</a></li>
+        <li><a href="?postId=[paramPostId]" class="dropdown-item"><i class="bi bi-pencil"></i> Editar</a></li>
+        <li><a href="" class="dropdown-item"><i class="bi bi-trash"></i> Excluir</a></li>
+    </ul>
 </div>
